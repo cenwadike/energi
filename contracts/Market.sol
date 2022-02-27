@@ -46,7 +46,7 @@ contract NFTMarket is ReentrancyGuard {
     return listingPrice;
   }
   
-  /* Places an item for sale on the marketplace */
+  /* Places an auction for sale on the auction marketplace */
   function createMarketItem(
     address nftContract,
     uint256 tokenId,

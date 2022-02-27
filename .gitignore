@@ -39,6 +39,8 @@ yarn-error.log*
 
 node_modules
 
+yarn.lock
+
 #Hardhat files
 cache
 artifacts

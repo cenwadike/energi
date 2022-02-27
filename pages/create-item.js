@@ -60,28 +60,79 @@ export default function CreateItem() {
     router.push('/')
   }
 
-  return (
-    <div className="flex justify-center">
-      <div className="w-1/2 flex flex-col pb-12">
-        <input 
-          placeholder="Auction Name"
-          className="mt-8 border rounded p-4"
-          onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
-        />
-        <textarea
-          placeholder="Amount (KwH)"
-          className="mt-2 border rounded p-4"
-          onChange={e => updateFormInput({ ...formInput, amount: e.target.value })}
-        />
-        <input
-          placeholder="Price in Matic"
-          className="mt-2 border rounded p-4"
-          onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
-        />
-        <button onClick={createMarket} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
-          Create Digital Asset
-        </button>
-      </div>
+  return(
+    <div className="mt-auto">
+      <main>
+        <div className="py-6 md:py-12">
+          <div className="px-4 mt-20 flex justify-center">
+            <form className="w-full max-w-sm">
+              <div className="md:flex md:items-center mb-6">
+                <div className="md:w-1/3">
+                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" 
+                         htmlFor="inline-full-name">
+                    Auction Name   
+                  </label>
+                </div>
+                <div className="md:w-2/3">
+                  <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                         id="auction_name" 
+                         type="text" 
+                         placeholder="Auction_Name"
+                         onChange={e => updateFormInput ({ ...formInput, name: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="md:flex md:items-center mb-6">
+                <div className="md:w-1/3">
+                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" 
+                         htmlFor="energe_quantity">
+                    Amount (KWh)
+                  </label>
+                </div>
+                <div className="md:w-2/3">
+                  <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                         id="quantity" 
+                         type="number" 
+                         placeholder="250"
+                         onChange={ e => updateFormInput ({ ...formInput, amount: e.target.value})}
+                  />
+                </div>
+              </div>
+              <div className="md:flex md:items-center mb-6">
+                <div className="md:w-1/3">
+                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" 
+                         htmlFor="starting_price">
+                    Price(MATIC)
+                  </label>
+                </div>
+                <div className="md:w-2/3">
+                  <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                         id="price" 
+                         type="number" 
+                         placeholder="10"
+                         onChange={ e => updateFormInput ({ ...formInput, price: e.target.value})}
+                  />
+                </div>
+              </div>
+              <div className="md:flex md:items-center">
+                <div className="md:w-1/3"></div>
+                <div className="flex justify-center">
+                  <Link href="/marketplace">
+                    <a>
+                      <button onClick={ placeAuction } 
+                              className="shadow bg-indigo-600 hover:bg-indigo-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg" 
+                              type="button"
+                      >
+                      Auction Energy
+                    </button>
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>  
+      </main>
     </div>
   )
 }

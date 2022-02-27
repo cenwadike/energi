@@ -57,6 +57,7 @@ export default function Home() {
   }
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
   return (
+    <>
     <div className="flex justify-center pt-10 pb-10">
       <div className="px-4 pt-12" style={{ maxWidth: '1600px' }}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
@@ -79,5 +80,13 @@ export default function Home() {
         </div>
       </div>
     </div>
+    <div className="mt-5 flex w-full justify-center">
+      <button className="bg-indigo-600 text-white py-2 px-6 rounded-full text-xl mt-6 hover:bg-purple-700 transition-colors duration-300"> 
+        <Link href="/create-auction">
+          <a>Create an auction</a>
+        </Link>
+      </button>
+    </div>
+    </>
   )
 }

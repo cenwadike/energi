@@ -1,6 +1,4 @@
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { ethers } from "ethers"
 
 export default function Home() {
   return (

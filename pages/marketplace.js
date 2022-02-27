@@ -7,8 +7,8 @@ import {
   nftaddress, nftmarketaddress
 } from '../config'
 
-import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
-import Market from '../artifacts/contracts/Market.sol/NFTMarket.json'
+import NFT from '../artifact/NFT.json'
+import Market from '../artifact/NFTMarket.json'
 
 let rpcEndpoint = `https://rpc-mumbai.maticvigil.com/`
 

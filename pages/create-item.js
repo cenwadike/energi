@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
 
@@ -57,7 +58,7 @@ export default function CreateItem() {
 
     transaction = await contract.createMarketItem(nftaddress, tokenId, price, { value: listingPrice })
     await transaction.wait()
-    router.push('/')
+    router.push('/marketplace')
   }
 
   return(
@@ -119,7 +120,7 @@ export default function CreateItem() {
                 <div className="flex justify-center">
                   <Link href="/marketplace">
                     <a>
-                      <button onClick={ placeAuction } 
+                      <button onClick={ createMarket } 
                               className="shadow bg-indigo-600 hover:bg-indigo-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg" 
                               type="button"
                       >

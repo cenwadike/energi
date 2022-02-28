@@ -1,4 +1,5 @@
 import { ethers } from 'ethers'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Web3Modal from "web3modal"
@@ -80,9 +81,9 @@ export default function Home() {
         </div>
       </div>
     </div>
-    <div className="mt-5 flex w-full justify-center">
+    <div className="mt-5 mb-10 flex w-full justify-center">
       <button className="bg-indigo-600 text-white py-2 px-6 rounded-full text-xl mt-6 hover:bg-purple-700 transition-colors duration-300"> 
-        <Link href="/create-auction">
+        <Link href="/create-item">
           <a>Create an auction</a>
         </Link>
       </button>

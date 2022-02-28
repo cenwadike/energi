@@ -56,7 +56,20 @@ export default function Home() {
     await transaction.wait()
     loadNFTs()
   }
-  if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
+  if (loadingState === 'loaded' && !nfts.length) 
+    return (
+      <>
+        <h1 className="px-10 py-20 text-3xl text-semibold text-indigo-600">No Auction Available</h1>
+        <div className="mt-5 mb-10 flex w-full justify-center">
+          <button className="bg-indigo-600 text-white py-2 px-6 rounded-full text-xl mt-6 hover:bg-purple-700 transition-colors duration-300"> 
+            <Link href="/create-item">
+              <a>Create an auction</a>
+            </Link>
+          </button>
+        </div>
+      </>
+    )
+
   return (
     <>
     <div className="flex justify-center pt-10 pb-10">

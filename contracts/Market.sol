@@ -27,6 +27,7 @@ contract NFTMarket is ReentrancyGuard {
     address payable owner;
     uint256 price;
     bool sold;
+    uint deadline;
   }
 
   mapping(uint256 => MarketItem) private idToMarketItem;
@@ -38,7 +39,8 @@ contract NFTMarket is ReentrancyGuard {
     address seller,
     address owner,
     uint256 price,
-    bool sold
+    bool sold,
+    uint deadline
   );
 
   /* Returns the listing price of the contract */
@@ -57,6 +59,7 @@ contract NFTMarket is ReentrancyGuard {
 
     _itemIds.increment();
     uint256 itemId = _itemIds.current();
+    uint deadline = block.timestamp + 15 minutes;
   
     idToMarketItem[itemId] =  MarketItem(
       itemId,
@@ -65,9 +68,14 @@ contract NFTMarket is ReentrancyGuard {
       payable(msg.sender),
       payable(address(0)),
       price,
-      false
+      false,
+      deadline
     );
 
+    if(deadline < block.timestamp) {
+      idToMarketItem[itemId].sold = true;
+    }
+    
     IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
 
     emit MarketItemCreated(
@@ -77,7 +85,8 @@ contract NFTMarket is ReentrancyGuard {
       msg.sender,
       address(0),
       price,
-      false
+      false,
+      deadline
     );
   }
 
@@ -89,7 +98,9 @@ contract NFTMarket is ReentrancyGuard {
     ) public payable nonReentrant {
     uint price = idToMarketItem[itemId].price;
     uint tokenId = idToMarketItem[itemId].tokenId;
+    uint deadline = idToMarketItem[itemId].deadline;
     require(msg.value == price, "Please submit the asking price in order to complete the purchase");
+    require(deadline > block.timestamp, "The deadline has passed");
 
     idToMarketItem[itemId].seller.transfer(msg.value);
     IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
@@ -107,7 +118,7 @@ contract NFTMarket is ReentrancyGuard {
 
     MarketItem[] memory items = new MarketItem[](unsoldItemCount);
     for (uint i = 0; i < itemCount; i++) {
-      if (idToMarketItem[i + 1].owner == address(0)) {
+      if (idToMarketItem[i + 1].owner == address(0) && idToMarketItem[i + 1].sold == false) {
         uint currentId = i + 1;
         MarketItem storage currentItem = idToMarketItem[currentId];
         items[currentIndex] = currentItem;

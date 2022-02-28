@@ -39,13 +39,13 @@ export default function Navbar() {
         >
           <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto'>
             <Link href='/marketplace'>
-            <a className="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300 click:bg-indigo-600 click:text-white">Marketplace</a>                  
-            </Link>
-            <Link href='/about'>
-            <a className="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">About</a>
+              <a className="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300 click:bg-indigo-600 click:text-white">Marketplace</a>                  
             </Link>
             <Link href='/dashboard'>
-            <a className="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">Dashboard</a>
+              <a className="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">Dashboard</a>
+            </Link>
+            <Link href='/about'>
+              <a className="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">About</a>
             </Link>
             <Link href='/#'>
               <img className='w-8 h-8 mx-10 mb-2' src='Wallet.svg' alt='Wallet' />

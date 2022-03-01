@@ -74,6 +74,7 @@ contract NFTMarket is ReentrancyGuard {
 
     if(deadline < block.timestamp) {
       idToMarketItem[itemId].sold = true;
+      _itemsSold.increment();
     }
     
     IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
@@ -118,7 +119,9 @@ contract NFTMarket is ReentrancyGuard {
 
     MarketItem[] memory items = new MarketItem[](unsoldItemCount);
     for (uint i = 0; i < itemCount; i++) {
-      if (idToMarketItem[i + 1].owner == address(0) && idToMarketItem[i + 1].sold == false) {
+      if (idToMarketItem[i + 1].owner == address(0)
+        && idToMarketItem[i + 1].sold == false 
+        && idToMarketItem[i + 1].deadline > block.timestamp) {
         uint currentId = i + 1;
         MarketItem storage currentItem = idToMarketItem[currentId];
         items[currentIndex] = currentItem;
@@ -135,7 +138,10 @@ contract NFTMarket is ReentrancyGuard {
     uint currentIndex = 0;
 
     for (uint i = 0; i < totalItemCount; i++) {
-      if (idToMarketItem[i + 1].owner == msg.sender) {
+      if (idToMarketItem[i + 1].owner == msg.sender
+        && idToMarketItem[i + 1].sold == false 
+        && idToMarketItem[i + 1].deadline > block.timestamp
+      ) {
         itemCount += 1;
       }
     }

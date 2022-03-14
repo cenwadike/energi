@@ -1,26 +1,8 @@
-## Full stack NFT marketplace built with Polygon, Solidity, IPFS, & Next.js
-
-![Header](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/pfofv47dooojerkmfgr4.png)
-
-This is the codebase to go along with tbe blog post [Building a Full Stack NFT Marketplace on Ethereum with Polygon](https://dev.to/dabit3/building-scalable-full-stack-apps-on-ethereum-with-polygon-2cfb)
+## Peer to peer energi auction marketplace built with Polygon, Solidity, IPFS, & Next.js
 
 ### Running this project
 
 #### Gitpod
-
-To deploy this project to Gitpod, follow these steps:
-
-1. Click this link to deploy
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#github.com/dabit3/polygon-ethereum-nextjs-marketplace)
-
-2. Import the RPC address given to you by GitPod into your MetaMask wallet
-
-This endpoint will look something like this:
-
-```
-https://8545-copper-swordtail-j1mvhxv3.ws-eu18.gitpod.io/
-```
 
 The chain ID should be 1337. If you have a localhost rpc set up, you may need to overwrite it.
 
@@ -33,9 +15,9 @@ To run this project locally, follow these steps.
 1. Clone the project locally, change into the directory, and install the dependencies:
 
 ```sh
-git clone https://github.com/dabit3/polygon-ethereum-nextjs-marketplace.git
+git clone https://github.com/cenwadike/energi.git
 
-cd polygon-ethereum-nextjs-marketplace
+cd energi
 
 # install using NPM or Yarn
 npm install
@@ -60,7 +42,7 @@ npx hardhat run scripts/deploy.js --network localhost
 4. Start the app
 
 ```
-npm run dev
+npx next dev
 ```
 
 ### Configuration
@@ -84,7 +66,7 @@ module.exports = {
     mumbai: {
       // Infura
       // url: `https://polygon-mumbai.infura.io/v3/${infuraId}`
-      url: "https://rpc-mumbai.matic.today",
+      url: "https://rpc-mumbai.maticvigil.com",
       accounts: [privateKey]
     },
     matic: {

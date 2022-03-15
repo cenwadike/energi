@@ -25,4 +25,9 @@ contract NFT is ERC721URIStorage {
         setApprovalForAll(contractAddress, true);
         return newItemId;
     }
+    
+    // function burnToken(uint256 tokenId) public returns (uint) {
+    //     _burn(msg.sender, tokenId);
+    //     return tokenId;
+    // }
 }

@@ -15,7 +15,7 @@ let rpcEndpoint = `https://rpc-mumbai.maticvigil.com/`
 
 export default function Home() {
   const [nfts, setNfts] = useState([])
-  // const [bid, updateBid] = useState(0)
+  const [formInput, updateFormInput] = useState({ bid: '' })
   const [modal, setShowModal] = useState(false)
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function Home() {
     setNfts(items)
     setLoadingState('loaded')
   }
-  async function buyNft(nft, e) { // modify to call in modal
+  async function buyNft(nft) {
     const web3Modal = new Web3Modal()
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
@@ -52,7 +52,7 @@ export default function Home() {
     const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
 
     setShowModal(false)
-    const bid = ethers.utils.parseUnits(e.target.value.toString(), 'ether')
+    const bid = ethers.utils.parseEther(formInput.bid)
     const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
     const transaction = await contract.createMarketSale(nftaddress, nft.itemId, bid, {
       value: price
@@ -60,7 +60,7 @@ export default function Home() {
     await transaction.wait()
     loadNFTs()
   }
-  
+
   if (loadingState === 'loaded' && !nfts.length)
     return (
       <>
@@ -91,51 +91,41 @@ export default function Home() {
                   </div>
                   <div className="p-2 bg-black">
                     <p className="flex justify-center text-2xl mb-4 font-bold text-white">{nft.price} MATIC</p>
-                    <button className="w-full bg-purple-500 text-white font-bold py-2 px-12 rounded" type='button' data-modal-toggle="defaultModal" onClick={() => setShowModal(true)}>Place Bid</button>
-                    { modal ? (
-                      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                        <div class="flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
-                          <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
-                            Place your bid
-                          </h3>
-                        </div>
-                        <div class="p-6 space-y-6">                    
-                          <form className="w-full max-w-sm">
-                            <div className="md:flex md:items-center mb-6">
-                              <div className="md:w-1/3">
-                                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                  htmlFor="inline-full-name">
-                                  Auction Name
-                                  <div className="md:w-2/3">
-                                    <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                                      id="auction_bid"
-                                      type="number"
-                                      placeholder="Your bid" 
-                                      (e.target.value)={updateBid)}
-                                    />{/*onSubmit={(e) => buyNft(nft, e)}*/}
-                                  </div>
-                                </label>
-                                <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                                <input class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                  data-modal-toggle="defaultModal" 
-                                  type='submit' 
-                                  value={e.target.value} 
-                                  onClick={(e) => buyNft(nft, e)} />
-                                </div>
+                    <button className="w-full bg-purple-500 text-white font-bold py-2 px-12 rounded" type='button' data-modal-toggle="bid-modal" onClick={() => setShowModal(true)}>Place Bid</button>
+                    {modal ? (
+                      <div id="bid-modal" aria-hidden="true" className="overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 flex justify-center items-center h-modal md:h-full md:inset-0">
+                        <div className="relative px-4 w-full max-w-md h-full md:h-auto">
+                          <div className="relative bg-purple-200 rounded-lg shadow">
+                            <div className="flex justify-end p-2">
+                              <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="bid-modal" onClick={() => setShowModal(false)}>
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+                              </button>
+                            </div>
+                            <form className="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8">
+                              <h3 className="text-xl font-semibold text-indigo-600 dark:text-white text-center">Make your bid</h3>
+                              <div className="flex justify-center">
+                                <label htmlFor="auction-name" className="block mb-2 text-lg font-semibold text-indigo-600 dark:text-gray-300">{nft.name}</label>
                               </div>
-                              
-                            </div>\
-                          </form>
+                              <div>
+                                <label htmlFor="auction-bid" className="block mb-2 text-sm font-medium text-indigo-600 dark:text-gray-300">Your Bid</label>
+                                <input type="text" name="bid" id="bid" className="bg-gray-50 border border-gray-300 text-purple-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="10" required=""
+                                  onChange={e => updateFormInput({ ...formInput, bid: e.target.value })} />
+                              </div>
+                              <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                onClick={() => buyNft(nft)}>Submit</button>
+                            </form>
+
+                          </div>
                         </div>
                       </div>
-                    ) : null }
+                    ) : null}
                   </div>
                 </div>
               ))
             }
           </div>
         </div>
-      </div>
+      </div >
       <div className="mt-5 mb-10 flex w-full justify-center">
         <button className="bg-indigo-600 text-white py-2 px-6 rounded-full text-xl mt-6 hover:bg-purple-700 transition-colors duration-300">
           <Link href="/create-item">

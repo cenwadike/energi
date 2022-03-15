@@ -73,7 +73,7 @@ contract NFTMarket is ReentrancyGuard {
     );
 
     if(deadline < block.timestamp) {
-      idToMarketItem[itemId].sold = true;
+      delete idToMarketItem[itemId];
       _itemsSold.increment();
     }
     
@@ -93,6 +93,7 @@ contract NFTMarket is ReentrancyGuard {
 
   /* Place bid on item */
   /* Transfers ownership of the item, as well as funds between parties after deadline */
+  //TODO: modulate this function    
   function createMarketSale(
     address nftContract,
     uint256 itemId,
@@ -106,7 +107,7 @@ contract NFTMarket is ReentrancyGuard {
 
     require(msg.sender.balance >= price, "Insufficient funds");
     require(bid >= price, "Bid too low");
-    // require(deadline > block.timestamp, "The deadline has passed");
+    require(deadline > block.timestamp, "The deadline has passed");
 
     // transfer bid to escrow
     payable(owner).transfer(bid);
@@ -139,25 +140,10 @@ contract NFTMarket is ReentrancyGuard {
           payable(bidders[i]).transfer(bids[i]);
         }
       }
+
+      delete idToMarketItem[itemId];
     }
   }
-
-  /* payout amount to highest bidder at the end of the deadline */
-  // function payout() private payable nonReentrant {
-  //   idToMarketItem[itemId].seller.transfer(currentBid);
-  //   IERC721(nftContract).transferFrom(address(this), highestBidder, tokenId);
-  //   idToMarketItem[itemId].owner = payable(highestBidder);
-  //   idToMarketItem[itemId].sold = true;
-  //   _itemsSold.increment();
-  //   payable(owner).transfer(listingPrice);
-
-  //   // loop through bidders and pay them
-  //   for(uint i = 0; i < bidders.length; i++) {
-  //     if(bidders[i] != highestBidder) {
-  //       bidders[i].transfer(bids[i]);
-  //     }
-  //   }
-  // }
 
   /* Returns all unsold market items */
   function fetchMarketItems() public view returns (MarketItem[] memory) {

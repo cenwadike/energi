@@ -26,11 +26,11 @@ export default function CreatorDashboard() {
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
-      
+
     const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
     const data = await marketContract.fetchItemsCreated()
-    
+
     const items = await Promise.all(data.map(async i => {
       const tokenUri = await tokenContract.tokenURI(i.tokenId)
       const meta = await axios.get(tokenUri)
@@ -50,16 +50,18 @@ export default function CreatorDashboard() {
     const soldItems = items.filter(i => i.sold)
     setSold(soldItems)
     setNfts(items)
-    setLoadingState('loaded') 
+    setLoadingState('loaded')
   }
-  if (loadingState === 'loaded' && !nfts.length) 
+  if (loadingState === 'loaded' && !nfts.length)
     return (
       <>
-        <h1 className="pt-10 text-3xl md:text-4xl text-indigo-600 font-small mb-2">
-          No assets created
-        </h1>
+        <div className='pt-12 px-5'>
+          <h1 className="pt-8 text-3xl md:text-4xl text-indigo-600 font-small mb-2">
+            No assets created
+          </h1>
+        </div>
         <div className="mt-5 flex w-full justify-center">
-          <button className="bg-indigo-600 text-white py-2 px-6 rounded-full text-xl mt-6 hover:bg-purple-700 transition-colors duration-300"> 
+          <button className="bg-indigo-600 text-white py-2 px-6 rounded-full text-xl mt-6 mb-6 hover:bg-purple-700 transition-colors duration-300">
             <Link href="/create-item">
               <a>Create an auction</a>
             </Link>
@@ -71,17 +73,17 @@ export default function CreatorDashboard() {
     <div className='pt-12 text-2xl md:text-4xl text-indigo-600 font-bold mb-12'>
       <div className="p-4">
         <h2 className="text-2xl py-2">Items created</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
               <div key={i} className="border shadow rounded-xl overflow-hidden">
-                <div className="p-4 bg-purple-900">
+                <div className="p-4 bg-indigo-400">
                   <p className="text-2xl font-small text-white">Name - {nft.name} </p>
                 </div>
-                <div className="p-4 bg-purple-900">
+                <div className="p-4 bg-indigo-400">
                   <p className="text-2xl font-small text-white">Amount - {nft.amount}KwH</p>
                 </div>
-                <div className="p-4 bg-black">
+                <div className="p-4 bg-indigo-500">
                   <p className="text-2xl font-small text-white">Price - {nft.price} Matic</p>
                 </div>
               </div>
@@ -90,31 +92,31 @@ export default function CreatorDashboard() {
         </div>
       </div>
       <div className="px-4">
-      {
-        Boolean(sold.length) && (
-          <div>
-            <h2 className="text-2xl py-2">Items sold</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-              {
-                sold.map((nft, i) => (
-                  <div key={i} className="border shadow rounded-xl overflow-hidden">
-                    <img src={nft.image} className="rounded" />
-                    <div className="p-4 bg-purple-900">
-                      <p className="text-2xl font-small text-white">Price - {nft.price} Matic</p>
+        {
+          Boolean(sold.length) && (
+            <div>
+              <h2 className="text-2xl py-2">Items sold</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                {
+                  sold.map((nft, i) => (
+                    <div key={i} className="border shadow rounded-xl overflow-hidden">
+                      <img src={nft.image} className="rounded" />
+                      <div className="p-4 bg-indigo-400">
+                        <p className="text-2xl font-small text-white">Price - {nft.price} Matic</p>
+                      </div>
+                      <div className="p-4 bg-indigo-400">
+                        <p className="text-2xl font-small text-white">Amount - {nft.amount}</p>
+                      </div>
+                      <div className="p-4 bg-indigo-500">
+                        <p className="text-2xl font-small text-white">Name - {nft.name} KwH</p>
+                      </div>
                     </div>
-                    <div className="p-4 bg-purple-900">
-                      <p className="text-2xl font-small text-white">Amount - {nft.amount}</p>
-                    </div>
-                    <div className="p-4 bg-black">
-                      <p className="text-2xl font-small text-white">Name - {nft.name} KwH</p>
-                    </div>
-                  </div>
-                ))
-              }
+                  ))
+                }
+              </div>
             </div>
-          </div>
-        )
-      }
+          )
+        }
       </div>
     </div>
   )

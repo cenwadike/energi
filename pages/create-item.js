@@ -121,7 +121,7 @@ export default function CreateItem() {
                   <Link href="/marketplace">
                     <a>
                       <button onClick={ createMarket } 
-                              className="shadow bg-indigo-600 hover:bg-indigo-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg" 
+                              className="shadow bg-blue-700 hover:bg-indigo-800 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg" 
                               type="button"
                       >
                       Auction Energy

@@ -17,7 +17,7 @@ export default function Home() {
               </div>
             </div>
           <div className="flex w-full justify-center">
-            <button className="bg-indigo-600 text-white py-2 px-6 rounded-full text-xl mt-6 hover:bg-purple-700 transition-colors duration-300">
+            <button className="bg-blue-700 hover:bg-indigo-800 text-white py-2 px-6 rounded-full text-xl mt-6 transition-colors duration-300">
               <Link href="/marketplace">
                 <a>
                 Explore

@@ -1,8 +1,9 @@
-<<<<<<< HEAD
+ ENERGI; P2P ENERGY AUCTION PLATFORM 
 =======
-## Peer to peer energi auction marketplace built with Polygon, Solidity, IPFS, & Next.js
+## This is a proof of concept. We utilize NFTs to represent energy on the blockchain. The Energy (NFT) metadata is stored on IPFS. The web interface is designed with NextJs.  
+_A production grade prototype will be built using substrate blockchain framework._
 
-### Running this project
+## Running this project
 
 #### Gitpod
 
